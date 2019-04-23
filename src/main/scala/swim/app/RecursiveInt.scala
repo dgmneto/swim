@@ -113,10 +113,8 @@ case class RecursiveIntDomain2(override val numVars: Int, override val recDepthL
   }
 }
 
-
-
 case object TestRecursiveDomain
-    extends IApp('maxGenerations -> 100, 'populationSize -> 1000, 'parEval -> true) {
+    extends IApp('maxGenerations -> 100, 'populationSize -> 10000, 'parEval -> true) {
 
   val nArgs = 1 // the number of input variables
   val grammar = Grammar('I,
@@ -129,13 +127,13 @@ case object TestRecursiveDomain
       'ite -> ('B, 'I, 'I),
       'a -> ('A), // argument (input)
       'rec -> ('I), // recursive call
-      0L, 1L//, // int constants
+      2L, 1L//, // int constants
       ),
     'B -> Seq(
       //true, false,
       //'not -> ('B),
       //'and -> ('B, 'B),
-      //'or -> ('B, 'B),
+      'or -> ('B, 'B),
       '< -> ('I, 'I),
       '> -> ('I, 'I),
       '== -> ('I, 'I)),
@@ -145,7 +143,7 @@ case object TestRecursiveDomain
   // 0-based indexing of series elements
   def factorial(n: Long): Long = if (n == 0) 1 else n * factorial(n - 1)
   def fibonacci(n: Long): Long = if (n <= 1) 1 else fibonacci(n - 1) + fibonacci(n - 2)
-  val targetFunction = factorial _ // Target function: factorial or Fibonacci
+  val targetFunction = fibonacci _ // Target function: factorial or Fibonacci
   val tests = Tests(0.until(numExamples).map(n => (Seq(n.toLong), targetFunction(n))))
 
   val domain = RecursiveIntDomain(nArgs, numExamples + 1 /* recursion depth limit */ )

@@ -11,5 +11,6 @@ lazy val root = (project in file(".")).
     libraryDependencies ++= Seq(
         "org.scala-lang" % "scala-compiler" % scalaVersion.value,
         "junit" % "junit" % "4.12" % Test,
-        "com.novocode" % "junit-interface" % "0.11" % Test)
+        "com.novocode" % "junit-interface" % "0.11" % Test,
+        "com.google.guava" % "guava" % "27.1-jre")
   ).dependsOn(fuel)
